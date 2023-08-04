@@ -2,7 +2,7 @@ FROM php:8.2.8-apache
 
 RUN set -ex \
     && apt-get update \
-    && apt-get -y install locales 7zip zip git unzip libcurl4-gnutls-dev libicu-dev libzip-dev \
+    && apt-get -y install locales 7zip zip git unzip gdb libcurl4-gnutls-dev libicu-dev libzip-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -ex \
@@ -13,6 +13,9 @@ RUN set -ex \
         intl \
         opcache \
         zip
+
+RUN set -ex \
+    && echo "CoreDumpDirectory /tmp" >> /etc/apache2/apache2.conf
 
 RUN set -ex \
     && curl -sSL https://getcomposer.org/download/2.5.8/composer.phar -o /usr/local/bin/composer \
